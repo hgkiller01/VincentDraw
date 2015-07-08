@@ -1,0 +1,82 @@
+﻿@model IPagedList<DicentDraw.Models.Orders>
+
+@{
+    ViewBag.Title = "查詢訂單";
+}
+@section Scripts{
+    <script>
+        $(function () {
+            $("#Detail").kendoWindow({
+                visible: false,
+                title: "訂單明細",
+                actions: ["Minimize", "Maximize","Close"]
+            });
+            var dialog = $("#Detail").data("kendoWindow");
+           $(".OpenDetail").click(function () {
+               dialog.open();
+           })
+        })
+    </script>
+}
+<h2 class="text-center">查詢訂單</h2>
+<div class="col-md-12">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Orderstat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DeliveryAddress)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Ajax.ActionLink(item.OrderID, "ListDetail", new { id = item.OrderID }, new AjaxOptions() { UpdateTargetId = "Detail", InsertionMode = InsertionMode.Replace }
+         , new { @class = "k-button OpenDetail" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @if (item.Orderstat == 1)
+                    {
+                        @:處理中
+                    }
+                    else if (item.Orderstat == 2)
+                    {
+                        @:已送貨
+                    }
+                    else if (item.Orderstat == 3)
+                    {
+                        @:取消
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div class="pager">
+    @Html.PagedListPager(Model, page => Url.Action("OrderList", new { page }))
+</div>
+@*<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            ...
+        </div>
+    </div>
+</div>*@
+<div id="Detail"></div>

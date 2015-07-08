@@ -1,0 +1,12 @@
+﻿@model DicentDraw.Models.Orders
+<div>
+    <h2>更改處理狀態</h2>
+    @using (Ajax.BeginForm("Edit2", new AjaxOptions() {  OnSuccess = "location.reload()" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(Model => Model.OrderID)
+        @(Html.Kendo().DropDownList().Name("Select").BindTo(ViewBag.Status as SelectList))
+        <input type="submit" class="k-button" value="確定"/>
+    }
+
+</div>

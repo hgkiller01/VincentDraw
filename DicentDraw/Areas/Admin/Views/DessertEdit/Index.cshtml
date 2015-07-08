@@ -1,0 +1,25 @@
+﻿﻿﻿@model IEnumerable<DicentDraw.Models.Dessert>
+@{
+    ViewBag.Title = "點心列表";
+}
+<div class="col-md-12" style="margin-bottom:20px;">
+@Html.ActionLink("點心上架", "Upload", null, new { @class = "k-button" })
+</div>
+
+<div class="col-md-12">
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.DessertName);
+          columns.Bound(c => c.DessertPrice);
+          columns.Bound(c => c.DessertKind);
+          columns.Command(command => { command.Custom("編輯").Action("Edit", "DessertEdit"); });
+      })
+      .Pageable()
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      }).DataSource(datasource => datasource.Server().Model(model => model.Id(x => x.DessertID)))
+)
+</div>
