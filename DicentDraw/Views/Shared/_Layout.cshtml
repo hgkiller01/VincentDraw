@@ -27,9 +27,6 @@
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
     @RenderSection("Styles",false)
     <style>
-        #navbar {
-    height: 389px;
-}
         body {
     /*padding-top: 50px;*/
     padding-bottom: 20px;
@@ -38,10 +35,10 @@
 </head>
 <body style="background-image:url('@Url.Content("~/images/background.jpg")')">
     <div id="all" class="container">
- 
-            <div id="navbar" style="background-image:url('@Url.Content("~/images/logo.jpg")')">
-                
-            </div>
+
+        <div id="navbar" style="">
+            <img class="img-responsive" src="@Url.Content("~/images/logo.jpg")">
+        </div>
         <div class="nav">
             @Html.Kendo().Menu().Name("Sitemap").BindTo("MySite").SecurityTrimming(true)
         </div>
@@ -59,6 +56,6 @@
     </div>
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/kendo")
-    @RenderSection("Scripts",false)
+    @RenderSection("Scripts", false)
 </body>
 </html>
