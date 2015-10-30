@@ -18,6 +18,7 @@ namespace DicentDraw.Controllers
         private ShopDBEntities db = new ShopDBEntities();
         public ActionResult Index()
         {
+            //test
             string showImage;
             Random rad = new Random();
             int alldessertCount = db.Dessert.Count();
