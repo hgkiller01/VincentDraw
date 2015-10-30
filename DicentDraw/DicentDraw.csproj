@@ -146,6 +146,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessageBoardController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderListController.cs" />
+    <Compile Include="Code\ImageProcess.cs" />
     <Compile Include="Controllers\BoxBuyController.cs" />
     <Compile Include="Controllers\DessertBuyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -540,6 +541,7 @@
     <Content Include="images\Cake009.png" />
     <Content Include="images\Cake010.png" />
     <Content Include="images\choco-oats.jpg" />
+    <Content Include="images\cookie.ico" />
     <Content Include="images\Cookie.jpg" />
     <Content Include="images\Cookie001.png" />
     <Content Include="images\Cookie002.png" />

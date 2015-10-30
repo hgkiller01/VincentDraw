@@ -10,6 +10,7 @@ using DicentDraw.Models.ViewModels;
 using CaptchaMvc.Controllers;
 using CaptchaMvc.HtmlHelpers;
 using System.Web.Security;
+using DicentDraw.Code;
 
 namespace DicentDraw.Controllers
 {
