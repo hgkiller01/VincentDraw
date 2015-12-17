@@ -10,18 +10,18 @@ using Kendo.Mvc.Extensions;
 
 namespace DicentDraw.Controllers
 {
-    [Authorize(Roles="User")]
+    [Authorize(Roles = "User")]
     public class DessertBuyController : ProductViewController
     {
         //protected ShopDBEntities db = new ShopDBEntities();
         // GET: ProductView
-        public override  ActionResult Index(int page=1)
+        public override ActionResult Index(int page = 1)
         {
             if (Session["DessertCount"] == null)
             {
                 Session["DessertCount"] = new List<AddDessertViewModel>();
             }
-           
+
             return View();
         }
         public ActionResult Cancel()
@@ -45,7 +45,7 @@ namespace DicentDraw.Controllers
             }
             int total = allDessert.Sum(x => x.DessertPrice * x.DessertAmount);
             ViewBag.Total = total;
-           
+
         }
         [HttpPost]
         public ActionResult ShowSingleDetail(AddDessertViewModel order)
@@ -122,13 +122,13 @@ namespace DicentDraw.Controllers
             }
             var NowAmount = Session["DessertCount"] as List<AddDessertViewModel>;
             int Amount = 0;
-            if (NowAmount.Where(x => x.DessertID == id).Count() > 0) 
+            if (NowAmount.Where(x => x.DessertID == id).Count() > 0)
             {
                 Amount = NowAmount.Where(x => x.DessertID == id).FirstOrDefault().DessertAmount;
             }
-           var selectDessert = db.Dessert.Find(id);
-           AddDessertViewModel addDessert = AddModel(selectDessert);
-           return View(addDessert);
+            var selectDessert = db.Dessert.Find(id);
+            AddDessertViewModel addDessert = AddModel(selectDessert);
+            return View(addDessert);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -137,16 +137,17 @@ namespace DicentDraw.Controllers
             if (ModelState.IsValid)
             {
                 List<AddDessertViewModel> BuyDessert = Session["DessertCount"] as List<AddDessertViewModel>;
-               var checkDessert = BuyDessert.Where(x => x.DessertID == addDessert.DessertID);
-               if (checkDessert.Count() > 0)
-               {
-                   checkDessert.FirstOrDefault().DessertAmount = addDessert.DessertAmount;
-               }
-               {
+                var checkDessert = BuyDessert.Where(x => x.DessertID == addDessert.DessertID);
+                if (checkDessert.Count() > 0)
+                {
+                    checkDessert.FirstOrDefault().DessertAmount = addDessert.DessertAmount;
+                }
+                else
+                {
                     BuyDessert.Add(addDessert);
-               }
+                }
 
-               return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             var selectDessert = db.Dessert.Find(addDessert.DessertID);
             addDessert = AddModel(selectDessert);
