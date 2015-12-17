@@ -15,7 +15,7 @@
     <AssemblyName>DicentDraw</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -817,7 +817,9 @@
     <Content Include="Views\Shared\EditorTemplates\ascx\String.ascx" />
     <Content Include="Views\Shared\EditorTemplates\ascx\Time.ascx" />
     <Content Include="Views\Shared\EditorTemplates\ascx\Url.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1026,7 +1028,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>6705</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6705/</IISUrl>
+          <IISUrl>http://localhost</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
