@@ -38,8 +38,8 @@
 <body style="background-image:url('@Url.Content("~/images/background.jpg")')">
     <div id="all" class="container">
 
-        <div id="navbar" style="">
-            <img class="img-responsive" src="@Url.Content("~/images/logo.jpg")">
+        <div>
+            <img style="width:100%;" class="img-responsive" src="@Url.Content("~/images/logo.jpg")">
         </div>
         <div class="nav">
             @Html.Kendo().Menu().Name("Sitemap").BindTo("MySite").SecurityTrimming(true)
