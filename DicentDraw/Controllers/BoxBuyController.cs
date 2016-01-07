@@ -108,6 +108,7 @@ namespace DicentDraw.Controllers
                         {
                             ModelState.AddModelError("DessertAmount", "此禮盒不能選派");
                         }
+                        else
                         {
                             ModelState.AddModelError("DessertAmount", "派的數量超過" + addDessert.PieCount + "個");
                         }
@@ -122,6 +123,7 @@ namespace DicentDraw.Controllers
                         {
                             ModelState.AddModelError("DessertAmount", "此禮盒不能選蛋糕");
                         }
+                        else
                         {
                             ModelState.AddModelError("DessertAmount", "蛋糕的數量超過" + addDessert.CakeCount + "個");
                         }
@@ -135,6 +137,7 @@ namespace DicentDraw.Controllers
                 {
                     checkDessert.FirstOrDefault().DessertAmount = addDessert.DessertAmount;
                 }
+                else
                 {
                     BuyDessert.Add(addDessert);
                 }
