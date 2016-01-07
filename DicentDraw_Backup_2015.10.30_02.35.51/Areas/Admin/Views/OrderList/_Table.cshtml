@@ -1,0 +1,84 @@
+﻿@model IPagedList<DicentDraw.Models.Orders> 
+@using PagedList;
+@using PagedList.Mvc;
+<script>
+        $(function () {
+            $("#Detail").kendoWindow({
+                visible: false,
+                title: "訂單明細",
+                actions: ["Minimize", "Maximize","Close"]
+            });
+            $("#ChangeStatus").kendoWindow({
+                visible: false,
+                title: "更改狀態",
+                actions: ["Minimize", "Maximize", "Close"]
+            })
+            var dialog2 = $("#ChangeStatus").data("kendoWindow")
+            var dialog = $("#Detail").data("kendoWindow");
+           $(".OpenDetail").click(function () {
+               dialog.center().open();
+           })
+           $(".CStatus").click(function () {
+               dialog2.center().open();
+           })
+        })
+</script>
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Orderstat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DeliveryAddress)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Ajax.ActionLink(item.OrderID, "ListDetail", new { id = item.OrderID }, new AjaxOptions() { UpdateTargetId = "Detail", InsertionMode = InsertionMode.Replace }
+         , new { @class = "k-button OpenDetail" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @if (item.Orderstat == 1)
+                    {
+                        @:處理中
+                    }
+                    else if (item.Orderstat == 2)
+                    {
+                        @:已送貨
+                    }
+                    else if (item.Orderstat == 3)
+                    {
+                        @:取消
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryAddress)
+                </td>
+                <td>
+                    @Ajax.ActionLink("更改狀態", "Edit", new { id = item.OrderID }, new AjaxOptions() { UpdateTargetId = "ChangeStatus", InsertionMode = InsertionMode.Replace }, new {@class= "CStatus" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div class="pager">
+    @Html.PagedListPager(Model, page => Url.Action("Index2", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { UpdateTargetId = "mainTable", InsertionMode = InsertionMode.Replace }))
+</div>
+<div id="Detail"></div>
+<div id="ChangeStatus"></div>

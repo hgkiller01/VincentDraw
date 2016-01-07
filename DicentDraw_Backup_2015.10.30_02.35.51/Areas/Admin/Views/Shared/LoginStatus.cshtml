@@ -1,0 +1,16 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <p style="color:aqua" class="text-center">你好!!!@User.Identity.Name</p>
+    <p class="text-center">
+        @Html.ActionLink("會員專頁", "Index", new { Controller = "MemberPage" }, new { @class = "k-button" })
+        @Html.ActionLink("登出", "Logout", new { Controller = "Home" }, new { @class = "k-button" })
+</p>
+}
+else
+{
+    <p style="color:aqua" class="text-center">遊客你好!!</p>
+    <p class="text-center">
+        @Html.ActionLink("註冊", "Register", new {Controller = "Home" }, new { @class = "k-button" })
+        @Html.ActionLink("登入", "Login", new { Controller = "Home" }, new { @class = "k-button" })
+    </p>
+}

@@ -1,0 +1,109 @@
+﻿@model DicentDraw.Models.ViewModels.MemberViewModel
+@section Scripts{
+    <script>
+        $("#CaptchaInputText").addClass("k-textbox")
+    </script>
+
+}
+@section Styles{
+    <style>
+        .k-textbox {
+            width: 200px;
+        }
+    </style>
+}
+@{
+    ViewBag.Title = "會員註冊";
+    var captcha = Html.Captcha("更換圖片", "輸入圖片文字", 5, "驗証碼必填", true);
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal col-lg-8 col-lg-offset-4">
+        <h2 class="col-lg-offset-2">會員註冊</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "k-textbox" } })
+                @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+        
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "k-textbox" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Adress, new { htmlAttributes = new { @class = "k-textbox" } })
+                @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telphone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Telphone,htmlAttributes:new{@class="k-textbox"})
+                @Html.ValidationMessageFor(model => model.Telphone, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "k-textbox" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "k-textbox" } })
+                @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PassWord2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassWord2, new { htmlAttributes = new { @class = "k-textbox" } })
+                @Html.ValidationMessageFor(model => model.PassWord2, "", new { @class = "text-danger" })
+                <span style="color:red">*</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">驗証碼</label>
+            <div class="col-md-10">
+                @captcha
+                <p>@Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "text-danger" })</p>
+                <span style="color:red">*</span>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="註冊" class="k-button" />
+            </div>
+        </div>
+    </div>
+}
+

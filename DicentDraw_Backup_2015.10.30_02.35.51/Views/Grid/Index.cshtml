@@ -1,0 +1,25 @@
+﻿﻿﻿@(Html.Kendo().Grid<DicentDraw.Models.Dessert>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+        columns.Bound(c => c.DessertName);
+        columns.Bound(c => c.DessertPrice);
+        columns.Bound(c => c.DessertKind);
+        columns.Bound(c => c.DessertIntroduction);
+        columns.Bound(c => c.DessertImage);
+        columns.Bound(c => c.IsOnSale);
+        columns.Command(command => { command.Edit(); }).Width(180);
+      })
+      .Editable(editable => editable.Mode(GridEditMode.PopUp))
+      .Pageable()
+      .Sortable(sortable => {
+          sortable.SortMode(GridSortMode.SingleColumn);
+      })
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .Model(model => model.Id(p => p.DessertID))
+          .Read(read => read.Action("Dessert_Read", "Grid"))
+          .Update(update => update.Action("Dessert_Update", "Grid"))
+      )
+)
