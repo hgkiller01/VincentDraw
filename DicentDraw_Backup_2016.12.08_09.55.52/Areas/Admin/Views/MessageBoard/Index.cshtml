@@ -1,0 +1,55 @@
+﻿@model IPagedList<DicentDraw.Models.Message>
+
+@{
+    ViewBag.Title = "信箱留言";
+}
+@section Styles{
+    <style>
+        td{
+            padding:5px 0;
+            text-align:center;
+        }
+        .message{
+            padding-bottom:50px;
+        }
+    </style>
+}
+<h2 class="text-center">信箱留言</h2>
+
+<table class="col-md-9 col-lg-offset-2 table-bordered">
+    @foreach (var item in Model)
+    {
+        <tr class="">
+            <td>
+                @Html.LabelFor(model => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>        
+        <tr class="">
+            <td>
+                @Html.LabelFor(model => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            
+        </tr>
+
+        <tr class="">
+            <td>
+                @Html.LabelFor(model => item.MessageInfo)
+            </td>
+            <td class="message">
+                @Html.DisplayFor(modelItem => item.MessageInfo)
+            </td>
+        </tr>
+
+
+    }
+</table>
+<div class="pager">
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
+

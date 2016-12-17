@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "會員首頁";
+}
+
+<h2 class="text-center">會員首頁</h2>
+<p class="text-center">
+@Html.ActionLink("更改個人資料", "ChangeData", null, htmlAttributes: new { @class = "k-button" })
+@Html.ActionLink("查詢訂單", "OrderList", null, htmlAttributes: new { @class = "k-button" })
+</p>
+

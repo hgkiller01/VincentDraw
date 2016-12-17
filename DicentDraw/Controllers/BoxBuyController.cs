@@ -175,6 +175,11 @@ namespace DicentDraw.Controllers
             ViewBag.Total = total + nowGift.GiftPrice;
 
         }
+        public ActionResult Cancel()
+        {
+            Session.Clear();
+            return RedirectToAction("index");
+        }
         [HttpPost]
         public ActionResult ShowBoxDetail(AddDessertViewModel order)
         {

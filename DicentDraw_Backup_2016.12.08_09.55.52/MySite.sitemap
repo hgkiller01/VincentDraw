@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+  <siteMapNode title="" description="">
+    <siteMapNode title="首頁" controller="Home" action="Index" area="">
+      <siteMapNode title="管理頁" controller="Home" action="Index" area="Admin"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode title="會員登入" controller="Home" action="Login" area=""></siteMapNode>
+     <siteMapNode title="會員首頁" controller="MemberPage" action="Index" area="">
+       <siteMapNode title="更改個人資料" controller="MemberPage" action="ChangeData" area=""></siteMapNode>
+       <siteMapNode title="訂單查詢" controller="MemberPage" action="OrderList" area=""></siteMapNode>
+     </siteMapNode>
+    <siteMapNode title="會員註冊" controller="Home" action="Register" area=""></siteMapNode>
+    <siteMapNode title="客服信箱" controller="MessageBoard" action="Index" area=""></siteMapNode>
+    <siteMapNode title="商品介紹" controller="ProductView" action="Index" area=""></siteMapNode>
+    <siteMapNode title="商品訂購" controller="ProductBuy" action="Index" area="">
+      <siteMapNode title="單品點心" controller="DessertBuy" action="Index" area=""></siteMapNode>
+      <siteMapNode title="客制禮盒" controller="BoxBuy" action="Index" area=""></siteMapNode>
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

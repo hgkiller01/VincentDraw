@@ -1,0 +1,99 @@
+﻿@model IEnumerable<DicentDraw.Models.ViewModels.DessertViewModel>
+
+@{
+    ViewBag.Title = "商品介紹";
+}
+@section Scripts{
+    <script>
+        $("#DessertShow").addClass("row");
+    </script>
+}
+@section Styles{
+    <style>
+   
+        div.k-tabstrip
+        {
+            background: none transparent;
+            border-width: 0;
+        }
+ 
+        div.k-tabstrip .k-tabstrip-items
+        {
+            padding: 0;
+        }
+ 
+        div.k-tabstrip .k-content
+        {
+            margin: 0;
+        }
+    </style>
+}
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="col-lg-5" style="height:450px">
+      <div class="col-lg-offset-3"><img src="@Url.Content("~/images/")#:DessertImage#" class="img-thumbnail" alt="#:DessertName#" /></div> 
+        <h3>#:DessertName#</h3>
+        <p>#:DessertIntroduction#</p>
+    </div>
+</script>
+<h2 class="text-center text-success">點心介紹</h2>
+<div class="col-md-12">
+    @(Html.Kendo()
+    .TabStrip()
+    .Name("DessertShow").
+            Items(tabstrip =>
+    {
+        tabstrip.Add()
+            .Selected(true)
+            .Text("餅乾").Content(@<div>
+                @(Html
+                .Kendo()
+                .ListView<DicentDraw.Models.ViewModels.DessertViewModel>()
+                .Name("Dessert")
+                .TagName("div")
+                .ClientTemplateId("template")
+                .DataSource(dataSource =>
+                {
+                    dataSource.Read(read => read.Action("Cookie_Read", "ProductView"));
+                    dataSource.PageSize(10);
+                })
+            .Pageable())
+            </div>);
+        tabstrip.Add()
+            .Text("蛋糕")
+            .Content(@<div>
+                @(Html
+                .Kendo()
+                .ListView<DicentDraw.Models.ViewModels.DessertViewModel>()
+                .Name("Dessert2")
+                .TagName("Div")
+                .ClientTemplateId("template")
+                .DataSource(dataSource =>
+                {
+                    dataSource.Read(read => read.Action("Cake_Read", "ProductView"));
+                    dataSource.PageSize(10);
+
+                })
+                 .Pageable())
+            </div>);
+        tabstrip.Add()
+            .Text("派")
+            .Content(@<div>
+                @(Html
+                .Kendo()
+                .ListView<DicentDraw.Models.ViewModels.DessertViewModel>()
+                .Name("Dessert3")
+                .TagName("Div")
+                .ClientTemplateId("template")
+                .DataSource(dataSource =>
+                {
+                    dataSource.Read(read => read.Action("Pie_Read", "ProductView"));
+                    dataSource.PageSize(10);
+
+                })
+                 .Pageable())
+            </div>);
+    }
+                    ))
+
+</div>
+  

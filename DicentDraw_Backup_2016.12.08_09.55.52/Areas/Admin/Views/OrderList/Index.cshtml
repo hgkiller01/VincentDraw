@@ -1,0 +1,19 @@
+﻿@model IPagedList<DicentDraw.Models.Orders>
+@{
+    ViewBag.Title = "訂單查詢";
+}
+@section Scripts{
+
+}
+<h2 class="text-center">查詢訂單</h2>
+<div id="mainTable" class="col-md-12">
+    @Html.Partial("_Table",Model)
+</div>
+
+@*<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                ...
+            </div>
+        </div>
+    </div>*@

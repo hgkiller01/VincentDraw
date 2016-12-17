@@ -1,0 +1,46 @@
+﻿@model IPagedList<DicentDraw.Models.Gift>
+@{
+    ViewBag.Title = "選擇禮盒";
+    int i = 0;
+}
+@section Styles{
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+}
+<div class="col-md-12">
+    <h2 class="text-center">請選擇禮盒</h2>
+    @using (Html.BeginForm("ShowDessert","BoxBuy"))
+    {
+        <table>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (i == 0)
+                    {
+                        <td style="text-align:center">
+                          <label for="@item.GiftID"><img class="img-rounded" src="@Url.Content("~/images/"+item.GiftImage)" /></label>  
+                           <p><input type="radio" name="GiftID" id="@item.GiftID" value="@item.GiftID" checked />@item.GiftName</p>
+                        </td>
+
+                        i++;
+                    }
+                    else
+                    {
+                        <td style="text-align:center">
+                            <label for="@item.GiftID"><img class="img-rounded" src="@Url.Content("~/images/"+item.GiftImage)" /></label>
+                            <p><input type="radio" name="GiftID" id="@item.GiftID" value="@item.GiftID" />@item.GiftName</p>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    <div class="pager">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+        <div class="col-md-12 col-lg-offset-5">
+            <input type="submit" class="k-button" value="選擇禮盒" />
+        </div>
+    }
+
+
+</div>

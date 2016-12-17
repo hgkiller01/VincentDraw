@@ -1,0 +1,121 @@
+﻿@model DicentDraw.Models.ViewModels.AddDessertViewModel
+@{
+    ViewBag.Title = "商品購買";
+}
+
+@section Styles{
+    <style>
+        div.k-tabstrip {
+            background: none transparent;
+            border-width: 0;
+        }
+
+            div.k-tabstrip .k-tabstrip-items {
+                padding: 0;
+            }
+
+            div.k-tabstrip .k-content {
+                margin: 0;
+            }
+    </style>
+}
+@section Scripts{
+    <script>
+        @if (TempData["BuySuccess"] != null)
+        {
+            @:alert("@TempData["BuySuccess"]")
+                                        }
+    </script>
+}
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="col-lg-5" style="height:450px">
+        <div class="col-lg-offset-3"><img src="@Url.Content("~/images/")#:DessertImage#" class="img-thumbnail" alt="#:DessertName#" /></div>
+        <h3 class="text-primary">#:DessertName#</h3>
+        <h3><span class="text-danger">目前訂購數量:</span>#:DessertAmount#</h3>
+        <a href="@Url.Action("AddDessertCount")/#:DessertID#" class="k-button">選擇數量</a>
+        <p style="color:blue;font-family:'微軟正黑體' sans-serif;">#:DessertIntroduction#</p>
+    </div>
+</script>
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(model => model.GiftID)
+<div class="col-md-12 text-center">
+    <h2>你現在可以選擇的</h2>
+    @if (Model.CookieCount != 0)
+    {
+        <h3>餅乾總數量為: @Model.CookieCount 個</h3>
+    }
+ 
+    @if (Model.PieCount != 0)
+    {
+        <h3>派總數量為: @Model.PieCount 個</h3>
+    }
+    @if (Model.CakeCount != 0)
+    {
+        <h3>蛋糕總數量為: @Model.CakeCount 個</h3>
+    }
+
+</div>
+<div class="col-md-12">
+    @(Html.Kendo()
+    .TabStrip()
+    .Name("DessertShow").
+            Items(tabstrip =>
+    {
+        tabstrip.Add()
+            .Selected(true)
+            .Text("餅乾").Content(@<div>
+                @(Html
+                .Kendo()
+                .ListView<DicentDraw.Models.ViewModels.AddDessertViewModel>()
+                .Name("Dessert")
+                .TagName("div")
+                .ClientTemplateId("template")
+                .DataSource(dataSource =>
+                {
+                    dataSource.Read(read => read.Action("Cookie_Read", "DessertBuy"));
+                    dataSource.PageSize(10);
+                })
+            .Pageable())
+            </div>);
+        tabstrip.Add()
+            .Text("蛋糕")
+            .Content(@<div>
+                @(Html
+                .Kendo()
+                .ListView<DicentDraw.Models.ViewModels.AddDessertViewModel>()
+                .Name("Dessert2")
+                .TagName("Div")
+                .ClientTemplateId("template")
+                .DataSource(dataSource =>
+                {
+                    dataSource.Read(read => read.Action("Cake_Read", "DessertBuy"));
+                    dataSource.PageSize(10);
+
+                })
+                 .Pageable())
+            </div>);
+        tabstrip.Add()
+            .Text("派")
+            .Content(@<div>
+                @(Html
+                .Kendo()
+                .ListView<DicentDraw.Models.ViewModels.AddDessertViewModel>()
+                .Name("Dessert3")
+                .TagName("Div")
+                .ClientTemplateId("template")
+                .DataSource(dataSource =>
+                {
+                    dataSource.Read(read => read.Action("Pie_Read", "DessertBuy"));
+                    dataSource.PageSize(10);
+
+                })
+                 .Pageable())
+            </div>);
+    }))
+</div>
+<div class="col-md-12 col-md-offset-4">
+    @Html.ActionLink("確認訂購明細", "ShowBoxDetail", null, new { @class = "k-button", style = "width:300px;Heigh:100px;font-size:32px" })
+</div>
+
+

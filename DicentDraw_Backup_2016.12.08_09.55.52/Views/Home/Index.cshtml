@@ -1,0 +1,79 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "首頁";
+    int count = 0;
+}
+@if (ViewBag.Message != null)
+{
+    <script>
+              alert(" @TempData["Message"] ")
+    </script>
+
+}
+
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+
+        <h3 class="text-center">嚴選素材</h3>
+        <p>
+            卓文森(Dicent Draw)流傳下來的配方與技術成就了餅乾獨特的酥脆口感與風味，
+            每片餅乾大小都是獨一無二。特別選用澳洲進口奶油，保有濃郁乳香味，
+            進口日本常用於製作高級甜食的三溫糖，並採用
+            玉米片、葡萄乾、杏仁角粒等原料。
+        </p>
+    </div>
+    <div class="col-lg-10 col-md-offset-1">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                @foreach (var item in Model)
+                {
+                    if (count == 0)
+                    {
+                        <div class="item active">
+                            <img src="@Url.Content("~/images/"+item)" style="margin:auto" width="200" height="200">
+                        </div>
+                        count++;
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <img src="@Url.Content("~/images/"+item)" style="margin:auto" width="200" height="200">
+                        </div>
+                    }
+
+                }
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">上一張</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">下一張</span>
+            </a>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 col-lg-offset-3">
+        <h3 class="text-center">精心設計精緻典雅的禮盒，將愛傳遞至您所愛的人手中</h3>
+        <p>
+            由日本設計團隊，依據季節、節慶設計出各式禮盒包裝，典雅精緻。
+            婚約禮盒的設計，更採用拼布與刺繡的原創設計理念，親手一針一線設計構圖，
+            除了堅持手感烘培外，從餅乾裝袋、禮盒組裝、繫上精緻蝴蝶結緞帶，
+            全程由人的巧手伴隨溫暖的心製作而成，為您傳遞由衷的祝福與感謝。
+        </p>
+    </div>
+
+</div>

@@ -1,0 +1,65 @@
+﻿@{
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <script>
+        kendo.culture("zh-TW")
+        kendo.messages("zh-TW")
+    </script>
+    <link href="@Url.Content("~/Content/kendo/2015.2.624/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.2.624/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.2.624/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.2.624/kendo.flat.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2015.2.624/kendo.dataviz.flat.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2015.2.624/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.2.624/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.2.624/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.2.624/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.2.624/messages/kendo.messages.zh-TW.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2015.2.624/cultures/kendo.culture.zh-TW.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    @RenderSection("Styles", false)
+    <style>
+        #navbar {
+            height: 389px;
+        }
+
+        body {
+            /*padding-top: 50px;*/
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body style="background-image:url('@Url.Content("~/images/background.jpg")')">
+    <div id="all" class="container">
+
+        <div id="navbar" style="background-image:url('@Url.Content("~/images/logo.jpg")')">
+
+        </div>
+        <div class="nav">
+            @Html.Kendo().Menu().Name("Sitemap").BindTo("Admin").SecurityTrimming(true)
+        </div>
+        <div class="row">
+            @RenderBody()
+            <hr />
+
+        </div>
+        <footer>
+            <h2>卓文森手工糕餅</h2>
+        </footer>
+    </div>
+    <div id="ShowLogin" style="background-color:black;">
+        @{Html.RenderPartial("LoginStatus");}
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/kendo")
+    @RenderSection("Scripts", false)
+</body>
+</html>

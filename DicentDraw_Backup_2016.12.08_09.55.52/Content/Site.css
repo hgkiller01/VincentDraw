@@ -1,0 +1,56 @@
+﻿body {
+    /*padding-top: 50px;*/
+    padding-bottom: 20px;
+    background-image: url("~/images/background.jpg");
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+
+
+#all {
+    padding: 0;
+    border: #000 groove 10px;
+    border-radius: 15px;
+    /*margin-top: 0 !important;*/
+    /*width: 934px;*/
+}
+
+#Sitemap > li {
+    margin-left: 40px;
+}
+
+footer {
+    height: 80px;
+    background-color: black;
+    font-family: "微軟正黑體",sans-serif;
+    color: white;
+}
+
+    footer h2 {
+        text-align: center;
+        padding-top: 20px;
+        font-size: 30px;
+        text-shadow: #333 1px 1px 0, #FFF 1px 1px 0;
+    }
+
+#ShowLogin {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    background-color: white;
+}
