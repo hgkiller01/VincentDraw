@@ -3,12 +3,18 @@
     ViewBag.Title = "首頁";
     int count = 0;
 }
-@if (ViewBag.Message != null)
+@if (TempData["Message"] != null)
 {
     <script>
-              alert(" @TempData["Message"] ")
+              alert("@TempData["Message"]")
     </script>
 
+}
+@if (ViewData["Logout"] != null)
+{
+    <script>
+              alert("@ViewData["Logout"]")
+    </script>
 }
 
 <div class="row">

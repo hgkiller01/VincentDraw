@@ -100,7 +100,7 @@ namespace DicentDraw.Controllers
 
                         // Create the cookie.
                         Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-                        TempData["LoginSucess"] = "登入成功";
+                        TempData["Message"] = "登入成功";
                         if (loginMember.isAdmin)
                         {
                             return RedirectToAction("Index", "Home", new { area = "Admin" });
@@ -120,7 +120,7 @@ namespace DicentDraw.Controllers
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
             Session.Clear();
-            ViewData["Logout"] = "你已經登出";
+            TempData["Message"] = "你已經登出";
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)
