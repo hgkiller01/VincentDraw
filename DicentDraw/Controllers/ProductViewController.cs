@@ -21,35 +21,41 @@ namespace DicentDraw.Controllers
         }
         public ActionResult Cookie_Read([DataSourceRequest] DataSourceRequest request)
         {
+            //取得所有販賣中的餅乾
             var Dessert = db.Dessert.Where(x => x.DessertKind == "Cookie" && x.IsOnSale);
             List<AddDessertViewModel> CookieDessert = new List<AddDessertViewModel>();
                 foreach (var item in Dessert)
                 {
+                    //加入ViewModel
                     CookieDessert.Add(AddModel(item));
                 }
-
+                 //回傳Kedo內定的JSON
             return Json(CookieDessert.ToDataSourceResult(request));
         }
         public ActionResult Cake_Read([DataSourceRequest] DataSourceRequest request)
         {
+            //取得所有販賣中的蛋糕
             var Dessert = db.Dessert.Where(x => x.DessertKind == "Cake" && x.IsOnSale);
             List<AddDessertViewModel> CakeDessert = new List<AddDessertViewModel>();
                 foreach (var item in Dessert)
                 {
+                   //加入ViewModel
                     CakeDessert.Add(AddModel(item));
                 }
-
+                //回傳Kedo內定的JSON
             return Json(CakeDessert.ToDataSourceResult(request));
         }
         public ActionResult Pie_Read([DataSourceRequest] DataSourceRequest request)
         {
+            //取得所有販賣中的派
             var Dessert = db.Dessert.Where(x => x.DessertKind == "Pie" && x.IsOnSale);
             List<AddDessertViewModel> PieDessert = new List<AddDessertViewModel>();
                 foreach (var item in Dessert)
                 {
+                    //加入ViewModel
                     PieDessert.Add(AddModel(item));
                 }
-
+            //回傳Kedo內定的JSON
             return Json(PieDessert.ToDataSourceResult(request));
         }
         public AddDessertViewModel AddModel(Dessert item)

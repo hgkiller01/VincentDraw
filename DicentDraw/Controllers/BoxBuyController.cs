@@ -12,22 +12,25 @@ using PagedList;
 
 namespace DicentDraw.Controllers
 {
-    [Authorize(Roles="User")]
+    [Authorize(Roles="User")]//判斷是否登入
     public class BoxBuyController : ProductViewController
     {
         // GET: BoxBuy
         public override ActionResult Index(int page =1)
         {
+            //判斷點心數量Session是否建立 
             if (Session["DessertCount"] == null)
             {
                 Session["DessertCount"] = new List<AddDessertViewModel>();
             }
+            //取出所有禮盒 除了G999無禮盒除外
             IEnumerable<Gift> gift = db.Gift.Where(x => x.GiftID != "G999" && x.IsOnSales).OrderBy(x => x.GiftID);
             
             return View(gift.ToPagedList(page, 5));
         }
         public ActionResult ShowDessert()
         {
+            //若沒選擇禮盒 則回到選擇畫面
             if (Session["Gift"] == null)
             {
                 return RedirectToAction("Index");
@@ -38,13 +41,16 @@ namespace DicentDraw.Controllers
         [HttpPost]
         public ActionResult ShowDessert(string GiftID)
         {
+            //取得禮盒
             var gift = db.Gift.Find(GiftID);
             var dessertCount = Session["DessertCount"] as List<AddDessertViewModel>;
+            //若已經有禮盒 則清空
             if (Session["Gift"] != null)
             {
                 Session["Gift"] = null;
                 dessertCount.Clear();
             }
+            //若禮盒已經清空 則重新輸入禮盒
             if (Session["Gift"] == null)
             {
                 Session["Gift"] = new AddDessertViewModel()
