@@ -22,12 +22,15 @@ namespace DicentDraw.Controllers
             //test
             string showImage;
             Random rad = new Random();
-            int alldessertCount = db.Dessert.Count();
-            List<string> ImgFileName = new List<string>();
+            int alldessertCount = db.Dessert.Count(); //取得所有點心數目
+            List<string> ImgFileName = new List<string>(); // 暫存點心檔名
+            //一次顯示五張圖片
             for (int i = 0; ImgFileName.Count() < 5; i++)
             {
+                //隨機取得檔名
                 showImage = rad.Next(1, alldessertCount).ToString("000");
                 ImgFileName.Add(db.Dessert.Where(x => x.DessertID == "D" + showImage).FirstOrDefault().DessertImage);
+                //消去相同檔名
                 ImgFileName = ImgFileName.Distinct().ToList();
             }  
             return View(ImgFileName);
