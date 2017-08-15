@@ -17,17 +17,20 @@ namespace DicentDraw.Areas.Admin.Controllers
         // GET: Admin/OrderList
         public ActionResult Index(int page=1)
         {
+            //取得所有訂單資料
            var result = db.Orders.OrderBy(x => x.OrderDate);
             return View(result.ToPagedList(page,5));
         }
         public ActionResult Index2(int page=1)
         {
+            //取得所有訂單資料
             var result = db.Orders.OrderBy(x => x.OrderDate);
             return PartialView("_Table", result.ToPagedList(page, 5));
         }
         public ActionResult Edit(string id)
         {
             var order = db.Orders.Find(id);
+            //下拉選單資料
             var Status = new Dictionary<int, string>();
             Status.Add(1, "處理中");
             Status.Add(2, "已送貨");
@@ -39,6 +42,7 @@ namespace DicentDraw.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit2(string OrderID , string Select)
         {
+            //編輯狀態
             var selectOrder = db.Orders.Where(x => x.OrderID == OrderID).FirstOrDefault();
             selectOrder.Orderstat = Convert.ToInt32(Select);
             db.Entry(selectOrder).State = EntityState.Modified;
@@ -51,6 +55,7 @@ namespace DicentDraw.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            //取得所有訂單明細
             var detail = db.OrderDetails.Where(x => x.OrderID == id);
             return PartialView(detail);
         }
