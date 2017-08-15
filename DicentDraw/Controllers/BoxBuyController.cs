@@ -66,19 +66,24 @@ namespace DicentDraw.Controllers
         }
         public ActionResult AddDessertCount(string id)
         {
+            //判斷是否傳入ID
             if (string.IsNullOrEmpty(id))
             {
                 return HttpNotFound();
             }
+            //取出所有選擇的點心
             var NowAmount = Session["DessertCount"] as List<AddDessertViewModel>;
             int Amount = 0;
+            //如果有選擇過則修改數量
             if (NowAmount.Where(x => x.DessertID == id).Count() > 0)
             {
                 Amount = NowAmount.Where(x => x.DessertID == id).FirstOrDefault().DessertAmount;
             }
+            //取得目前禮盒
             AddDessertViewModel GiftModel = Session["Gift"] as AddDessertViewModel;
             var dessert = db.Dessert.Find(id);
             AddDessertViewModel showDessert = AddModel(dessert);
+            //將此禮盒各種類點心的數量傳至頁面
             showDessert.GiftID = GiftModel.GiftID;
             showDessert.PieCount = GiftModel.PieCount;
             showDessert.CookieCount = GiftModel.CookieCount;
@@ -89,11 +94,14 @@ namespace DicentDraw.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddDessertCount(AddDessertViewModel addDessert)
         {
+            //取得目前所有點心
             List<AddDessertViewModel> BuyDessert = Session["DessertCount"] as List<AddDessertViewModel>;
-            int totalCookie = BuyDessert.Where(x => x.DessertKind == addDessert.DessertKind).Sum(x => x.DessertAmount);
-                if (addDessert.DessertKind == "Cookie")
+            //取得目前點心類別的數量
+            int totalDessert = BuyDessert.Where(x => x.DessertKind == addDessert.DessertKind).Sum(x => x.DessertAmount);
+            //目前類別為餅乾
+            if (addDessert.DessertKind == "Cookie")
                 {
-                    if (addDessert.DessertAmount + totalCookie > addDessert.CookieCount)
+                    if (addDessert.DessertAmount + totalDessert > addDessert.CookieCount)
                     {
                         if (addDessert.CookieCount == 0)
                         {
@@ -106,9 +114,10 @@ namespace DicentDraw.Controllers
                         
                     }
                 }
-                if (addDessert.DessertKind == "Pie")
+            //目前類別為派
+            if (addDessert.DessertKind == "Pie")
                 {
-                    if (addDessert.DessertAmount + totalCookie > addDessert.PieCount)
+                    if (addDessert.DessertAmount + totalDessert > addDessert.PieCount)
                     {
                         if (addDessert.PieCount == 0)
                         {
@@ -121,9 +130,10 @@ namespace DicentDraw.Controllers
                        
                     }
                 }
-                if (addDessert.DessertKind == "Cake")
+            //目前類別為蛋糕
+            if (addDessert.DessertKind == "Cake")
                 {
-                    if (addDessert.DessertAmount + totalCookie > addDessert.CakeCount)
+                    if (addDessert.DessertAmount + totalDessert > addDessert.CakeCount)
                     {
                         if (addDessert.CakeCount == 0)
                         {
@@ -136,6 +146,7 @@ namespace DicentDraw.Controllers
                         
                     }
                 }
+            //判斷Model輸入準確性
             if (ModelState.IsValid)
             {
                 var checkDessert = BuyDessert.Where(x => x.DessertID == addDessert.DessertID);
@@ -150,9 +161,12 @@ namespace DicentDraw.Controllers
 
                 return RedirectToAction("ShowDessert");
             }
+            //取得目前點心資料
             var selectDessert = db.Dessert.Find(addDessert.DessertID);
+            //轉為AddDessertViewModel
             addDessert = AddModel(selectDessert);
             AddDessertViewModel GiftModel = Session["Gift"] as AddDessertViewModel;
+            //將此禮盒各種類點心的數量傳至頁面
             addDessert.GiftID = GiftModel.GiftID;
             addDessert.PieCount = GiftModel.PieCount;
             addDessert.CookieCount = GiftModel.CookieCount;
@@ -166,15 +180,20 @@ namespace DicentDraw.Controllers
         }
         public void ShowTotal()
         {
+            //目前所選取點心
             var nowDessert = Session["DessertCount"] as List<AddDessertViewModel>;
+            //目前所選取禮盒
             var nowGift = Session["Gift"] as AddDessertViewModel;
             List<AddDessertViewModel> allDessert = new List<AddDessertViewModel>();
+            //將所有點心資料轉為AddDessertViewModel
             foreach (var item in nowDessert)
             {
                 var dessert = db.Dessert.Find(item.DessertID);
                 allDessert.Add(AddModel(dessert));
             }
+            //計算所有價格
             int total = allDessert.Sum(x => x.DessertPrice * x.DessertAmount);
+            //禮盒名稱以及價格
             nowGift.GiftName = db.Gift.Find(nowGift.GiftID).GiftName;
             nowGift.GiftPrice = db.Gift.Find(nowGift.GiftID).GiftPrice;
             ViewBag.Box = nowGift.GiftName;
@@ -189,10 +208,13 @@ namespace DicentDraw.Controllers
         [HttpPost]
         public ActionResult ShowBoxDetail(AddDessertViewModel order)
         {
+            //取出選擇的點心及禮盒
             var nowDessert = Session["DessertCount"] as List<AddDessertViewModel>;
             var nowGift = Session["Gift"] as AddDessertViewModel;
+            //產生訂單編號
             Random rad = new Random();
             string OrderID = DateTime.Now.ToString("yyyyMMddHHmmss") + rad.Next(999).ToString("000");
+            //判斷是否有地址
             if (string.IsNullOrEmpty(order.DeliveryAddress))
             {
                 ModelState.AddModelError("DeliveryAddress", "請填寫送貨地址");
@@ -200,14 +222,16 @@ namespace DicentDraw.Controllers
             #region
             if (ModelState.IsValid)
             {
+                //加入訂單主檔
                 db.Orders.Add(new Orders()
                 {
                     Account = User.Identity.Name,
                     DeliveryAddress = order.DeliveryAddress,
-                    Orderstat = 1,
+                    Orderstat = 1,//處理中
                     OrderID = OrderID,
                     OrderDate = DateTime.Today.Date,
                 });
+                //加入訂單明細
                 foreach (var item in nowDessert)
                 {
                     string detailID = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -236,16 +260,20 @@ namespace DicentDraw.Controllers
         }
         public ActionResult Read_BoxDetail([DataSourceRequest]DataSourceRequest Request)
         {
+            //取出選擇的點心及禮盒
             var nowDessert = Session["DessertCount"] as List<AddDessertViewModel>;
             var nowGift = Session["Gift"] as AddDessertViewModel;
             List<AddDessertViewModel> allDessert = new List<AddDessertViewModel>();
+            //點心轉為AddDessertViewModel
             foreach (var item in nowDessert)
             {
                 var dessert = db.Dessert.Find(item.DessertID);
                 allDessert.Add(AddModel(dessert));
             }
+            //計算總價
             int total = allDessert.Sum(x => x.DessertPrice * x.DessertAmount);
             nowGift.GiftName = db.Gift.Find(nowGift.GiftID).GiftName;
+            //顯示禮盒與總價
             ViewBag.Box = nowGift.GiftName;
             ViewBag.Total = total + nowGift.GiftPrice;
             return Json(allDessert.ToDataSourceResult(Request));
