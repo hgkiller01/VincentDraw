@@ -19,6 +19,7 @@ namespace DicentDraw.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(Message message)
         {
+            //加入留言
             if (ModelState.IsValid)
             {
                 db.Message.Add(message);

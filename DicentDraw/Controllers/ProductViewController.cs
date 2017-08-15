@@ -60,16 +60,21 @@ namespace DicentDraw.Controllers
         }
         public AddDessertViewModel AddModel(Dessert item)
         {
+            //目前選擇的點心
             List<AddDessertViewModel> allCout = Session["DessertCount"] as List<AddDessertViewModel>;
             int Amount = 0;
+            //判斷是否有選擇過此點心則讀取Session
             if (allCout != null)
             {
+                //取出目前要顯示的點心
                 var dessertCount = allCout.Where(x => x.DessertID == item.DessertID);
+                //若數量>0則顯示數量
                 if (dessertCount.Count() > 0)
                 {
                     Amount = dessertCount.FirstOrDefault().DessertAmount;
                 } 
             }
+            //回傳單一點心資料
             return new AddDessertViewModel()
             {
                 DessertID = item.DessertID,

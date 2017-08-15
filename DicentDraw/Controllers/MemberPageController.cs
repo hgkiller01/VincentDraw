@@ -21,6 +21,7 @@ namespace DicentDraw.Controllers
         }
         public ActionResult ChangeData()
         {
+            //取得會員資料
            var memberAccount = db.member.Where(x => x.Account == User.Identity.Name).FirstOrDefault();
            MemberDataViewModel memberData = new MemberDataViewModel()
            {
@@ -37,13 +38,16 @@ namespace DicentDraw.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChangeData(MemberDataViewModel memberData)
         {
+            //取得會員資料
             var memberAccount = db.member.Where(x => x.Account == memberData.Account).FirstOrDefault();
+            //判斷密碼是否正確
             if (memberAccount.PassWord != memberData.PassWord)
             {
                 ModelState.AddModelError("PassWord", "密碼不正確");
             }
             if (ModelState.IsValid)
             {
+                //更改會員資料
                 memberAccount.Adress = memberData.Adress;
                 memberAccount.Email = memberData.Email;
                 memberAccount.Name = memberData.Name;
@@ -60,8 +64,10 @@ namespace DicentDraw.Controllers
         }
         public ActionResult OrderList(int page = 1)
         {
+            //取得所有訂單資料
             var result = db.Orders.Where(x => x.Account == User.Identity.Name).OrderBy(x => x.OrderID);
-           return View(result.ToPagedList(page,5));
+            var result2 = result.ToList();
+           return View(result.ToList().ToPagedList(page,5));
         }
         public ActionResult ListDetail(string id)
         {
@@ -69,6 +75,7 @@ namespace DicentDraw.Controllers
             {
                 return HttpNotFound();
             }
+            //取得訂單明細
             var orderdetail = db.OrderDetails.Where(x => x.OrderID == id);
             return PartialView(orderdetail.ToList());
         }
