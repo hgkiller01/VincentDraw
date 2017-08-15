@@ -37,7 +37,7 @@ namespace DicentDraw.Controllers
         }
         public ActionResult Register()
         {
-            
+            //註冊頁面
             return View();
         }
         [HttpPost]
@@ -45,14 +45,17 @@ namespace DicentDraw.Controllers
         public ActionResult Register(MemberViewModel MemberData)
         {
             var checkAccount = db.member.Where(x => x.Account == MemberData.Account).Count();
+            //判斷驗證碼是否正確
             if (this.IsCaptchaValid("驗證碼錯誤"))
             {
+                //判斷帳號是否重復
                 if (checkAccount < 0)
                 {
                     ModelState.AddModelError("Account", "此帳號已經有人使用");
                 }
                 if (ModelState.IsValid)
                 {
+                    //新增會員
                     db.member.Add(new member()
                     {
                         Account = MemberData.Account,
@@ -79,24 +82,31 @@ namespace DicentDraw.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(MemberLoginViewModel login)
         {
+            //判斷驗證碼是否正確
             if (this.IsCaptchaValid("驗證碼錯誤"))
             {
+                //判斷輸入是否有誤
                 if (ModelState.IsValid)
                 {
+                    //取得會員帳號
                     var loginMember = db.member.Find(login.Account);
+                    //比對是否有此會員以及帳號的正確性
                     if (loginMember != null & loginMember.PassWord == login.PassWord)
                     {
+                        //一般會員
                         string roles = "User";
+                        //判斷是否為管理者
                         if (loginMember.isAdmin)
                         {
                             roles += ",Admin";
                         }
+                        //加入Ticket
                         FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
                             loginMember.Account,
                             DateTime.Now,
                             DateTime.Now.AddMinutes(30),
                             true,
-                            roles,
+                            roles,//角色權限
                             FormsAuthentication.FormsCookiePath);
                         // Encrypt the ticket.
                         string encTicket = FormsAuthentication.Encrypt(ticket);
@@ -104,8 +114,10 @@ namespace DicentDraw.Controllers
                         // Create the cookie.
                         Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
                         TempData["Message"] = "登入成功";
+                        
                         if (loginMember.isAdmin)
                         {
+                            //若是管理者 移至管理頁面
                             return RedirectToAction("Index", "Home", new { area = "Admin" });
                         }
                         return RedirectToAction("Index","MemberPage");
@@ -120,8 +132,10 @@ namespace DicentDraw.Controllers
         }
         public ActionResult Logout()
         {
+            //登出
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
+            //清除Session
             Session.Clear();
             TempData["Message"] = "你已經登出";
             return RedirectToAction("Index");
